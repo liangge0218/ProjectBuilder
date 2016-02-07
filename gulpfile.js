@@ -69,12 +69,15 @@ gulp.task('build-css', function(){
         console.log('build css ' + useConfig.root + cssObj.source);
         var stream = gulp.src(cssObj.source, {cwd:useConfig.root,base:useConfig.root})
             .pipe(cssnano())
-            //url()格式带md5
-            // .pipe(replace(/url\(([^\)]+)\?(\{md5\}).*?\)/g, function(m, p1, p2){
-            //     var filepath = path.join(useConfig.root, p1);
-            //     var hex = util.getMD5(filepath, useConfig.masksize);
-            //     return hex ? m.replace(p2, hex) : m;
-            // }));
+            //url()
+            .pipe(replace(/url\(([^\)]+)\)/g, function(m, url){
+                var result = url;
+                //md5替换
+                result = util.addMD5(result, useConfig);
+                //cdn替换
+                result = util.addCDNdomain(result);
+                return m.replace(url, result);
+            }));
         stream = stream.pipe(gulp.dest(useConfig.temp));
     })
 })
@@ -84,8 +87,13 @@ gulp.task('build-html', function(){
         console.log('build html ' + useConfig.root + htmlObj.source);
         gulp.src(htmlObj.source, {cwd:useConfig.root,base:useConfig.root})
             //<link rel="stylesheet" type="text/css" href="">
-            .pipe(replace(/\<link\s*[^\>]*?href=['"]([^'"]+)['"][^\>]*?[\/]?\>/gi, function(m, p1){
-
+            .pipe(replace(/\<link\s*[^\>]*?href=['"]([^'"]+)['"][^\>]*?[\/]?\>/gi, function(m, url){
+                var result = url;
+                //md5替换
+                result = util.addMD5(result, useConfig);
+                //cdn替换
+                result = util.addCDNdomain(result);
+                return m.replace(url, result);
             }))
             .pipe(gulp.dest(useConfig.temp));
     })

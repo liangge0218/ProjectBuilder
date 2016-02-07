@@ -30,9 +30,7 @@ module.exports = {
     ],
     'css' : [
         {
-            'source' : 'weixin/v4/css/**/*.css',
-            'match' : /url\(\/weixin\//g,
-            'target' : 'url(//qian-img.tenpay.com/weixin/'
+            'source' : 'weixin/v4/css/**/*.css'
         }
     ],
     'files' : [
