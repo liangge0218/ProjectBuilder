@@ -2,11 +2,15 @@ module.exports = {
     //源码目录
     'root' : '/fund_trunk/htdocs',
     //临时目录
-    'temp' : '/temp/htdocs',
+    'temp' : '/fund_trunk/temp/htdocs',
     //构建目录
     'dest' : '/fund_trunk/dest/htdocs',
+    //增量包目录
+    'rise' : '/fund_trunk/rise/htdocs',
     //文件打码长度
     'masksize' : 10,
+    //js文件名加后缀
+    'jssuffix' : '.min',
     //需要构建的js列表
     'js' : [
         {
@@ -35,7 +39,7 @@ module.exports = {
     ],
     'files' : [
         {
-            'source' : 'weixin/v4/img/**/*'
+            'source' : ['weixin/v4/img/**/*', 'weixin/v3/img/**/*']
         },
         {
             'source' : 'weixin/inc/*'
